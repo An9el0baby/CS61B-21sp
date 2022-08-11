@@ -5,7 +5,7 @@ import java.util.Observable;
 
 
 /** The state of a game of 2048.
- *  @author TODO: YOUR NAME HERE
+ *  @author Angelo Wu
  */
 public class Model extends Observable {
     /** Current contents of the board. */
@@ -138,6 +138,14 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+        int boardSize = b.size();
+        for (int row = 0; row < boardSize;row++){
+            for (int col = 0; col < boardSize; col++){
+                if (b.tile(col,row)==null){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -148,6 +156,15 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        int boardSize = b.size();
+        for (int row = 0; row < boardSize;row++){
+            for (int col = 0; col < boardSize; col++){
+                Tile t  = b.tile(col,row);
+                if (t != null && t.value()== MAX_PIECE){
+                        return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -159,6 +176,29 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        if (emptySpaceExists(b)){
+            return true;
+        }
+        // 2 Directions  UP/LEFT, other direction has been searched before by for loop the row,col index
+        int[] dx =  {1,0};
+        int[] dy =  {0,1};
+        int boardSize = b.size();
+        for (int row = 0; row < boardSize;row++) {
+            for (int col = 0; col < boardSize; col++) {
+                // No empty Space exists, so all tiles have values!!
+                int currentTileValue = b.tile(col,row).value();
+                for (int move =0; move < 2; move ++){
+                    int newCol = col + dy[move];
+                    int newRow = row + dx[move];
+                    if (newCol < boardSize && newRow < boardSize){
+                        int adjacentTileValue = b.tile(newCol,newRow).value();
+                        if (currentTileValue ==  adjacentTileValue){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
         return false;
     }
 
