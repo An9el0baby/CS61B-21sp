@@ -47,19 +47,11 @@ public class ArrayDeque <T> {
     }
     /** Get next index of current index. */
     public int indexPlusOne(int currentIndex){
-        if (currentIndex+1 == items.length) {
-            return 0;
-        }else {
-            return currentIndex+1;
-        }
+        return (currentIndex + 1) % items.length;
     }
     /** Get former index of current index. */
     public int indexMinusOne(int currentIndex){
-        if (currentIndex-1 == -1){
-            return items.length-1;
-        }else{
-            return currentIndex - 1;
-        }
+        return (currentIndex - 1 + items.length) % items.length;
     }
 
     /**Resize the list.*/
@@ -136,16 +128,8 @@ public class ArrayDeque <T> {
         if (i > size - 1) {
             return null;
         }
-        if (nextFirst == items.length - 1) {
-            return items[i];
-        } else{
-            if (i < items.length - nextFirst){
-                return items[indexPlusOne(nextFirst) + i];
-            }
-        }
+        int trueIndex = (indexPlusOne(nextFirst) + i) % items.length;
+        return  items[trueIndex];
     }
-
-
-
 
 }
