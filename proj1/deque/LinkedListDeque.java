@@ -1,6 +1,11 @@
 package deque;
+import java.util.Iterator;
 
-public class LinkedListDeque<T> {
+public class LinkedListDeque<T> implements Iterable<T>{
+
+    /* typeNode class.
+    Two pointer: next and previous
+    One Item. */
     private class typeNode{
         public T item;
         public typeNode next;
@@ -12,6 +17,30 @@ public class LinkedListDeque<T> {
         }
     }
 
+    private class LinkedListDequeIterator implements Iterator <T>{
+        private typeNode wizNode;
+        public LinkedListDequeIterator(){
+            wizNode =  pointNode;
+        }
+        @Override
+        public boolean hasNext(){
+            if (wizNode.next == pointNode){
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        public T next(){
+            T item = wizNode.next.item;
+            wizNode = wizNode.next;
+            return item;
+        }
+    }
+    @Override
+    public Iterator<T> iterator(){
+        return new LinkedListDequeIterator();
+    }
     private typeNode pointNode;
     private int size;
 
@@ -109,5 +138,33 @@ public class LinkedListDeque<T> {
         }else{
             return getRecursive(index, currentIndex+1,currentNode.next);
         }
+    }
+    @Override
+    public boolean equals(Object o){
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof LinkedListDeque otherList){
+            if (this.size() != otherList.size()){
+                return false;
+            }
+            for(T item : this){
+                if (! otherList.contains(item)){
+                    return false;
+                }
+            }
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    public boolean contains(T checkItem){
+        for (T item : this){
+            if (item.equals(checkItem)){
+                return true;
+            }
+        }
+        return false;
     }
 }

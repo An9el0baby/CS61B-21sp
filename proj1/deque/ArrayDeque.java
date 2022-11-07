@@ -1,6 +1,33 @@
 package deque;
+import java.util.Iterator;
 
-public class ArrayDeque <T> {
+public class ArrayDeque <T> implements Iterable<T>{
+    /**The Iterator class for ArrayDeque. */
+    private class ArrayDequeIterator implements Iterator<T>{
+       private int wizPos;
+       public ArrayDequeIterator(){
+           wizPos = 0;
+       }
+       @Override
+        public boolean hasNext(){
+           if (wizPos < size){
+               return true;
+           }
+           return false;
+       }
+       @Override
+        public T next(){
+           T item = get(wizPos);
+           wizPos += 1;
+           return item;
+       }
+    }
+    /** Enhanced For Loop.*/
+    @Override
+    public Iterator<T> iterator(){
+        return new ArrayDequeIterator();
+    }
+    /**Attributes for ArrayDeque class. */
     private T[] items;
     private int size;
     private int nextFirst  = 0;
@@ -10,6 +37,12 @@ public class ArrayDeque <T> {
     public ArrayDeque(){
         items = (T[]) new Object[8];
         size = 0;
+    }
+    /** Create a list with first item.*/
+    public ArrayDeque(T item){
+        items = (T[]) new Object[8];
+        size = 0;
+        addFirst(item);
     }
     /**Add an item at the first position of the list*/
     public void addFirst(T item){
@@ -57,9 +90,9 @@ public class ArrayDeque <T> {
     /**Resize the list.*/
     public void resize(int capacity){
         T[] copyItems = (T[]) new Object[capacity];
-        System.arraycopy(items,nextLast,copyItems,0,size-nextLast);
+        System.arraycopy(items,nextLast,copyItems,0,Math.max(0,size-nextLast));
         if (nextLast != 0 ){
-            System.arraycopy(items,0,copyItems,size-nextLast,nextLast);
+            System.arraycopy(items,indexPlusOne(nextFirst),copyItems,Math.max(0,size-nextLast),nextLast);
         }
         items =  copyItems;
     }
@@ -107,6 +140,9 @@ public class ArrayDeque <T> {
         T item = items[nextFirst];
         items[nextFirst] = null;
         size -= 1;
+        if (size < (items.length / 4)){
+            resize(Math.max(8, items.length / 4));
+        }
         return item;
     }
 
@@ -119,9 +155,12 @@ public class ArrayDeque <T> {
         T item  = items[nextLast];
         items[nextLast] = null;
         size -= 1;
+        if (size < (items.length / 4)){
+            resize(Math.max(8, items.length / 4));
+        }
+
         return item;
     }
-
 
     /** Get the item at index i. */
     public T get(int i) {
@@ -131,5 +170,35 @@ public class ArrayDeque <T> {
         int trueIndex = (indexPlusOne(nextFirst) + i) % items.length;
         return  items[trueIndex];
     }
+    @Override
+    /** Returns whether the parameter o is equal to the Deque. */
 
+    public boolean equals(Object o){
+        if (this == o){ return true;}
+        if (o instanceof ArrayDeque otherArrayDeque){
+            if (this.size() != otherArrayDeque.size()) {
+                return false;
+            }
+            for (T item : this){
+                if (! otherArrayDeque.contains(item)){
+                    return false;
+                }
+            }
+            return true;
+        } else{
+            return false;
+        }
+    }
+    public boolean contains(T checkItem){
+        for (T item : this){
+            if (item.equals(checkItem)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int bar(){
+        return items.length / 4;
+    }
 }
