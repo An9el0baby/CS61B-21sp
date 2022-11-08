@@ -88,13 +88,18 @@ public class ArrayDeque <T> implements Iterable<T>{
     }
 
     /**Resize the list.*/
-    public void resize(int capacity){
+    public void resize(int capacity) {
         T[] copyItems = (T[]) new Object[capacity];
-        System.arraycopy(items,nextLast,copyItems,0,Math.max(0,size-nextLast));
-        if (nextLast != 0 ){
-            System.arraycopy(items,indexPlusOne(nextFirst),copyItems,Math.max(0,size-nextLast),nextLast);
+        int currentFirst = indexPlusOne(nextFirst);
+        int currentLast = indexMinusOne(nextLast);
+        if ( currentFirst < currentLast) {
+            System.arraycopy(items, currentFirst, copyItems, 0,Math.min(items.length,currentLast+1)-currentFirst);
+        } else {
+            int tailSize =  Math.min(items.length,nextLast) - currentFirst;
+            System.arraycopy(items, indexPlusOne(nextFirst), copyItems, 0, tailSize);
+            System.arraycopy(items, 0, copyItems, tailSize, size - tailSize);
         }
-        items =  copyItems;
+        items = copyItems;
     }
     /**Returns True if the list is empty*/
     public boolean isEmpty(){
@@ -110,26 +115,10 @@ public class ArrayDeque <T> implements Iterable<T>{
     }
     /**Prints the items in the deque from first to last, separated by a space. */
     public void printDeque(){
-        if(nextFirst != items.length - 1){
-            for (int i = indexPlusOne((nextFirst)); i < items.length; i++){
-                System.out.print(items[i] + " ");
-            }
-            for (int i = 0; i < nextLast; i++){
-                if (i != nextLast -1){
-                    System.out.print(items[i] + " ");
-                }else{
-                    System.out.println(items[i]);
-                }
-            }
-        } else{
-            for (int i = 0; i < nextLast; i++){
-                if (i != nextLast -1){
-                    System.out.print(items[i] + " ");
-                }else{
-                    System.out.println(items[i]);
-                }
-            }
-        }
+     for (T item : this){
+         System.out.print(item +" ");
+     }
+     System.out.println();
     }
     /**Removes and returns the item at the front of the deque. */
     public T removeFirst(){
@@ -142,6 +131,8 @@ public class ArrayDeque <T> implements Iterable<T>{
         size -= 1;
         if (size < (items.length / 4)){
             resize(Math.max(8, items.length / 4));
+            nextFirst = items.length -1;
+            nextLast = size;
         }
         return item;
     }
@@ -157,6 +148,8 @@ public class ArrayDeque <T> implements Iterable<T>{
         size -= 1;
         if (size < (items.length / 4)){
             resize(Math.max(8, items.length / 4));
+            nextFirst = items.length -1;
+            nextLast = size;
         }
 
         return item;
