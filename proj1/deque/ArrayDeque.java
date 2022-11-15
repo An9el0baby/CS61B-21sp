@@ -1,7 +1,7 @@
 package deque;
 import java.util.Iterator;
 
-public class ArrayDeque <T> implements Iterable<T>{
+public class ArrayDeque <T> implements Iterable<T>, Deque<T>{
     /**The Iterator class for ArrayDeque. */
     private class ArrayDequeIterator implements Iterator<T>{
        private int wizPos;
@@ -44,6 +44,7 @@ public class ArrayDeque <T> implements Iterable<T>{
         size = 0;
         addFirst(item);
     }
+    @Override
     /**Add an item at the first position of the list*/
     public void addFirst(T item){
         if (size == 0){
@@ -61,6 +62,7 @@ public class ArrayDeque <T> implements Iterable<T>{
         }
         size += 1;
     }
+    @Override
     /**Add an item at the last position of the list*/
     public void addLast(T item){
         if (size == 0){
@@ -79,16 +81,16 @@ public class ArrayDeque <T> implements Iterable<T>{
         size += 1;
     }
     /** Get next index of current index. */
-    public int indexPlusOne(int currentIndex){
+    private int indexPlusOne(int currentIndex){
         return (currentIndex + 1) % items.length;
     }
     /** Get former index of current index. */
-    public int indexMinusOne(int currentIndex){
+    private int indexMinusOne(int currentIndex){
         return (currentIndex - 1 + items.length) % items.length;
     }
 
     /**Resize the list.*/
-    public void resize(int capacity) {
+    private void resize(int capacity) {
         T[] copyItems = (T[]) new Object[capacity];
         int currentFirst = indexPlusOne(nextFirst);
         int currentLast = indexMinusOne(nextLast);
@@ -101,25 +103,20 @@ public class ArrayDeque <T> implements Iterable<T>{
         }
         items = copyItems;
     }
-    /**Returns True if the list is empty*/
-    public boolean isEmpty(){
-        if (size == 0){
-            return true;
-        }else{
-            return false;
-        }
-    }
-    /**Returns the number of items in the deque.*/
+    @Override
+    /** Returns the number of items in the deque.*/
     public int size(){
         return  size;
     }
-    /**Prints the items in the deque from first to last, separated by a space. */
+    @Override
+    /** Prints the items in the deque from first to last, separated by a space. */
     public void printDeque(){
      for (T item : this){
          System.out.print(item +" ");
      }
      System.out.println();
     }
+    @Override
     /**Removes and returns the item at the front of the deque. */
     public T removeFirst(){
         if (size == 0 ){
@@ -129,6 +126,9 @@ public class ArrayDeque <T> implements Iterable<T>{
         T item = items[nextFirst];
         items[nextFirst] = null;
         size -= 1;
+        if (items.length == 8){
+            return item;
+        }
         if (size < (items.length / 4)){
             resize(Math.max(8, items.length / 4));
             nextFirst = items.length -1;
@@ -137,6 +137,7 @@ public class ArrayDeque <T> implements Iterable<T>{
         return item;
     }
 
+    @Override
     /** Removes and returns the item at the end of the deque. */
     public T removeLast(){
         if (size == 0 ){
@@ -146,15 +147,18 @@ public class ArrayDeque <T> implements Iterable<T>{
         T item  = items[nextLast];
         items[nextLast] = null;
         size -= 1;
+        if (items.length == 8){
+            return item;
+        }
         if (size < (items.length / 4)){
             resize(Math.max(8, items.length / 4));
             nextFirst = items.length -1;
             nextLast = size;
         }
-
         return item;
     }
 
+    @Override
     /** Get the item at index i. */
     public T get(int i) {
         if (i > size - 1) {
@@ -165,7 +169,6 @@ public class ArrayDeque <T> implements Iterable<T>{
     }
     @Override
     /** Returns whether the parameter o is equal to the Deque. */
-
     public boolean equals(Object o){
         if (this == o){ return true;}
         if (o instanceof ArrayDeque otherArrayDeque){
@@ -182,7 +185,7 @@ public class ArrayDeque <T> implements Iterable<T>{
             return false;
         }
     }
-    public boolean contains(T checkItem){
+    private boolean contains(T checkItem){
         for (T item : this){
             if (item.equals(checkItem)){
                 return true;
@@ -191,7 +194,4 @@ public class ArrayDeque <T> implements Iterable<T>{
         return false;
     }
 
-    public int bar(){
-        return items.length / 4;
-    }
 }
