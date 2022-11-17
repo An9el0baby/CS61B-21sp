@@ -41,7 +41,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T>{
     /** Create a list with first item.*/
     public ArrayDeque(T item){
         items = (T[]) new Object[8];
-        size = 0;
+        size = 1;
         addFirst(item);
     }
     @Override
