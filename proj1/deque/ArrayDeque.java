@@ -171,7 +171,8 @@ public class ArrayDeque <T> implements Iterable<T>, Deque<T>{
     /** Returns whether the parameter o is equal to the Deque. */
     public boolean equals(Object o){
         if (this == o){ return true;}
-        if (o instanceof ArrayDeque otherArrayDeque){
+        if (o instanceof ArrayDeque){
+            ArrayDeque<T> otherArrayDeque = (ArrayDeque<T>) o;
             if (this.size() != otherArrayDeque.size()) {
                 return false;
             }
