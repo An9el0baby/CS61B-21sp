@@ -34,16 +34,16 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
         return maxItem;
     }
 
-    /**My Integer Comparator. */
-    private static class IntComparator implements Comparator<Integer> {
-        @Override
-        public int compare(Integer a, Integer b){
-            return a - b;
-        }
-    }
-
-    public static Comparator<Integer> getIntComparator(){
-        return new IntComparator();
-    }
+//    /**My Integer Comparator. */
+//    private static class IntComparator implements Comparator<Integer> {
+//        @Override
+//        public int compare(Integer a, Integer b){
+//            return a - b;
+//        }
+//    }
+//
+//    public static Comparator<Integer> getIntComparator(){
+//        return new IntComparator();
+//    }
 
 }
