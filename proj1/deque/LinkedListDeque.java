@@ -7,10 +7,10 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
     Two pointer: next and previous
     One Item.*/
     private class TypeNode {
-        public T item;
-        public TypeNode next;
-        public TypeNode previous;
-        public TypeNode(T i, TypeNode n, TypeNode p) {
+        private T item;
+        private TypeNode next;
+        private TypeNode previous;
+        TypeNode(T i, TypeNode n, TypeNode p) {
             item =  i;
             next = n;
             previous = p;
@@ -20,8 +20,9 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
     /** LinkedList Iterator.*/
     private class LinkedListDequeIterator implements Iterator<T> {
         private TypeNode wizNode;
-        public LinkedListDequeIterator(){
+        LinkedListDequeIterator() {
             wizNode =  pointNode;
+
         }
         @Override
         public boolean hasNext() {
@@ -74,7 +75,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
     }
     @Override
     public void addLast(T i) {
-        TypeNode newNode = new TypeNode(i,null,null);
+        TypeNode newNode = new TypeNode(i, null, null);
         newNode.next  = pointNode;
         newNode.previous =  pointNode.previous;
         pointNode.previous.next =  newNode;
@@ -110,7 +111,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
     public T removeLast() {
         if (size == 0) {
             return  null;
-        }else {
+        } else {
             T lastVal = pointNode.previous.item;
             pointNode.previous = pointNode.previous.previous;
             pointNode.previous.next = pointNode;
@@ -120,27 +121,27 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
     }
     @Override
     public T get(int i) {
-        if (i > size-1) {
+        if (i > size - 1) {
             return null;
         }
         TypeNode node = pointNode.next;
-        for (int currentIndex = 0 ; currentIndex < i;currentIndex ++) {
+        for (int currentIndex = 0; currentIndex < i; currentIndex++) {
             node = node.next;
         }
         return  node.item;
     }
     /**Recursive for get method. */
     public T getRecursive(int i) {
-        if (i> size-1) {
+        if (i > size - 1) {
             return null;
         }
-       return getRecursive(i,0,pointNode.next);
+        return getRecursive(i, 0, pointNode.next);
     }
-    private T getRecursive(int index, int currentIndex,TypeNode currentNode) {
+    private T getRecursive(int index, int currentIndex, TypeNode currentNode) {
         if (currentIndex == index) {
             return currentNode.item;
-        }else {
-            return getRecursive(index, currentIndex+1,currentNode.next);
+        } else {
+            return getRecursive(index, currentIndex + 1, currentNode.next);
         }
     }
     @Override

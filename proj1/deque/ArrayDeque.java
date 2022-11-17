@@ -94,7 +94,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         T[] copyItems = (T[]) new Object[capacity];
         int currentFirst = indexPlusOne(nextFirst);
         int currentLast = indexMinusOne(nextLast);
-        if ( currentFirst < currentLast){
+        if (currentFirst < currentLast) {
             System.arraycopy(items, currentFirst, copyItems, 0, size);
         } else {
             int tailSize = items.length - currentFirst;
@@ -119,7 +119,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     @Override
     /**Removes and returns the item at the front of the deque. */
     public T removeFirst() {
-        if (size == 0 ) {
+        if (size == 0) {
             return null;
         }
         nextFirst = indexPlusOne(nextFirst);
@@ -130,7 +130,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
             nextFirst = 0;
             nextLast = 0;
         }
-        if (items.length == 8){
+        if (items.length == 8) {
             return item;
         }
         if (size < (items.length / 4)) {
@@ -155,7 +155,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
             nextFirst = 0;
             nextLast = 0;
         }
-        if (items.length == 8){
+        if (items.length == 8) {
             return item;
         }
         if (size < (items.length / 4)) {
