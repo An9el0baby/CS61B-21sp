@@ -54,14 +54,14 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         size = 0;
     }
 
-    public LinkedListDeque(T i) {
-        pointNode =  new typeNode(null,null,null);
-        pointNode.next =  new typeNode(i, null, null);
-        pointNode.previous = pointNode.next;
-        pointNode.next.next =  pointNode;
-        pointNode.next.previous =  pointNode;
-        size = 1;
-    }
+//    public LinkedListDeque(T i) {
+//        pointNode =  new typeNode(null,null,null);
+//        pointNode.next =  new typeNode(i, null, null);
+//        pointNode.previous = pointNode.next;
+//        pointNode.next.next =  pointNode;
+//        pointNode.next.previous =  pointNode;
+//        size = 1;
+//    }
 
     @Override
     public void addFirst(T i) {

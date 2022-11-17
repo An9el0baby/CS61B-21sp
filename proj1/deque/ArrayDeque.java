@@ -39,11 +39,11 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T>{
         size = 0;
     }
     /** Create a list with first item.*/
-    public ArrayDeque(T item){
-        items = (T[]) new Object[8];
-        size = 0;
-        addFirst(item);
-    }
+//    public ArrayDeque(T item){
+//        items = (T[]) new Object[8];
+//        size = 0;
+//        addFirst(item);
+//    }
     @Override
     /**Add an item at the first position of the list*/
     public void addFirst(T item){
@@ -127,6 +127,10 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T>{
         T item = items[nextFirst];
         items[nextFirst] = null;
         size -= 1;
+        if (size == 0) {
+            nextFirst = 0;
+            nextLast = 0;
+        }
         if (items.length == 8){
             return item;
         }
@@ -148,6 +152,10 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T>{
         T item  = items[nextLast];
         items[nextLast] = null;
         size -= 1;
+        if (size == 0) {
+            nextFirst = 0;
+            nextLast =0;
+        }
         if (items.length == 8){
             return item;
         }
