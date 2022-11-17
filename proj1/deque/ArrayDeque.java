@@ -1,7 +1,7 @@
 package deque;
 import java.util.Iterator;
 
-public class ArrayDeque <T> implements Iterable<T>, Deque<T>{
+public class ArrayDeque<T> implements Iterable<T>, Deque<T>{
     /**The Iterator class for ArrayDeque. */
     private class ArrayDequeIterator implements Iterator<T>{
        private int wizPos;
@@ -30,7 +30,7 @@ public class ArrayDeque <T> implements Iterable<T>, Deque<T>{
     /**Attributes for ArrayDeque class. */
     private T[] items;
     private int size;
-    private int nextFirst  = 0;
+    private int nextFirst = 0;
     private int nextLast = 0;
 
     /** Create an empty list*/
@@ -170,14 +170,16 @@ public class ArrayDeque <T> implements Iterable<T>, Deque<T>{
     @Override
     /** Returns whether the parameter o is equal to the Deque. */
     public boolean equals(Object o){
-        if (this == o){ return true;}
-        if (o instanceof ArrayDeque){
-            ArrayDeque<T> otherArrayDeque = (ArrayDeque<T>) o;
-            if (this.size() != otherArrayDeque.size()) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof Deque){
+            Deque<T> otherList = (Deque<T>) o;
+            if (this.size() != otherList.size()){
                 return false;
             }
-            for (T item : this){
-                if (! otherArrayDeque.contains(item)){
+            for (int i = 0; i < size; i++){
+                if (!(get(i).equals(otherList.get(i)))) {
                     return false;
                 }
             }
@@ -186,13 +188,13 @@ public class ArrayDeque <T> implements Iterable<T>, Deque<T>{
             return false;
         }
     }
-    private boolean contains(T checkItem){
-        for (T item : this){
-            if (item.equals(checkItem)){
-                return true;
-            }
-        }
-        return false;
-    }
+//    private boolean contains(T checkItem){
+//        for (T item : this){
+//            if (item.equals(checkItem)){
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
 }
