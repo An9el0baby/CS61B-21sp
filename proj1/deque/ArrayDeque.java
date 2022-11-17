@@ -41,7 +41,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T>{
     /** Create a list with first item.*/
     public ArrayDeque(T item){
         items = (T[]) new Object[8];
-        size = 1;
+        size = 0;
         addFirst(item);
     }
     @Override
@@ -97,7 +97,8 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T>{
         if ( currentFirst < currentLast) {
             System.arraycopy(items, currentFirst, copyItems, 0,Math.min(items.length,currentLast+1)-currentFirst);
         } else {
-            int tailSize =  Math.min(items.length,nextLast) - currentFirst;
+//            int tailSize =  Math.min(items.length,nextLast) - currentFirst;
+            int tailSize = items.length - currentFirst;
             System.arraycopy(items, indexPlusOne(nextFirst), copyItems, 0, tailSize);
             System.arraycopy(items, 0, copyItems, tailSize, size - tailSize);
         }
