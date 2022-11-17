@@ -3,14 +3,14 @@ import java.util.Iterator;
 
 public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
 
-    /** typeNode class.
+    /** TypeNode class.
     Two pointer: next and previous
     One Item.*/
-    private class typeNode {
+    private class TypeNode {
         public T item;
-        public typeNode next;
-        public typeNode previous;
-        public typeNode (T i, typeNode n, typeNode p) {
+        public TypeNode next;
+        public TypeNode previous;
+        public TypeNode(T i, TypeNode n, TypeNode p) {
             item =  i;
             next = n;
             previous = p;
@@ -18,8 +18,8 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
     }
 
     /** LinkedList Iterator.*/
-    private class LinkedListDequeIterator implements Iterator <T> {
-        private typeNode wizNode;
+    private class LinkedListDequeIterator implements Iterator<T> {
+        private TypeNode wizNode;
         public LinkedListDequeIterator(){
             wizNode =  pointNode;
         }
@@ -43,20 +43,20 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
     public Iterator<T> iterator() {
         return new LinkedListDequeIterator();
     }
-    private typeNode pointNode;
+    private TypeNode pointNode;
     private int size;
 
     /** Constructor for Linked List */
     public LinkedListDeque() {
-        pointNode =  new typeNode(null, null, null);
+        pointNode =  new TypeNode(null, null, null);
         pointNode.next =  pointNode;
         pointNode.previous =  pointNode;
         size = 0;
     }
 
 //    public LinkedListDeque(T i) {
-//        pointNode =  new typeNode(null,null,null);
-//        pointNode.next =  new typeNode(i, null, null);
+//        pointNode =  new TypeNode(null,null,null);
+//        pointNode.next =  new TypeNode(i, null, null);
 //        pointNode.previous = pointNode.next;
 //        pointNode.next.next =  pointNode;
 //        pointNode.next.previous =  pointNode;
@@ -65,7 +65,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
 
     @Override
     public void addFirst(T i) {
-        typeNode newNode  = new typeNode(i,null,null);
+        TypeNode newNode  = new TypeNode(i, null, null);
         pointNode.next.previous = newNode;
         newNode.next =  pointNode.next;
         newNode.previous =  pointNode;
@@ -74,7 +74,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
     }
     @Override
     public void addLast(T i) {
-        typeNode newNode = new typeNode(i,null,null);
+        TypeNode newNode = new TypeNode(i,null,null);
         newNode.next  = pointNode;
         newNode.previous =  pointNode.previous;
         pointNode.previous.next =  newNode;
@@ -87,7 +87,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
     }
     @Override
     public void printDeque() {
-        typeNode current = pointNode.next;
+        TypeNode current = pointNode.next;
         while (current.next != pointNode) {
             System.out.print(current.item + " ");
             current =  current.next;
@@ -123,7 +123,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         if (i > size-1) {
             return null;
         }
-        typeNode node = pointNode.next;
+        TypeNode node = pointNode.next;
         for (int currentIndex = 0 ; currentIndex < i;currentIndex ++) {
             node = node.next;
         }
@@ -136,7 +136,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         }
        return getRecursive(i,0,pointNode.next);
     }
-    private T getRecursive(int index, int currentIndex,typeNode currentNode) {
+    private T getRecursive(int index, int currentIndex,TypeNode currentNode) {
         if (currentIndex == index) {
             return currentNode.item;
         }else {

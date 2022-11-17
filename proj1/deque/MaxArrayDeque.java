@@ -27,23 +27,23 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
         }
         T maxItem = get(0);
         for (T i : this) {
-            if (c.compare(maxItem, i) > 0) {
+            if (c.compare(maxItem, i) < 0) {
                 maxItem = i;
             }
         }
         return maxItem;
     }
 
-//    /**My Integer Comparator. */
-//    private static class IntComparator implements Comparator<Integer> {
-//        @Override
-//        public int compare(Integer a, Integer b){
-//            return a - b;
-//        }
-//    }
-//
-//    public static Comparator<Integer> getIntComparator(){
-//        return new IntComparator();
-//    }
+    /**My Integer Comparator. */
+    private static class IntComparator implements Comparator<Integer> {
+        @Override
+        public int compare(Integer a, Integer b){
+            return a - b;
+        }
+    }
+
+    public static Comparator<Integer> getIntComparator(){
+        return new IntComparator();
+    }
 
 }
