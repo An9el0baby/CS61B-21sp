@@ -5,8 +5,8 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     /**The Iterator class for ArrayDeque. */
     private class ArrayDequeIterator implements Iterator<T> {
         private int wizPos;
-        public ArrayDequeIterator() {
-           wizPos = 0;
+        ArrayDequeIterator() {
+            wizPos = 0;
         }
         @Override
         public boolean hasNext() {
@@ -68,11 +68,11 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         if (size == 0) {
             items[0] =  item;
             nextLast = 1;
-            nextFirst = items.length -1;
-        }else if (size < items.length) {
+            nextFirst = items.length - 1;
+        } else if (size < items.length) {
             items[nextLast] =  item;
             nextLast =  indexPlusOne(nextLast);
-        }else {
+        } else {
             resize(size * 2);
             items[size] = item;
             nextFirst = items.length - 1;
@@ -94,8 +94,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         T[] copyItems = (T[]) new Object[capacity];
         int currentFirst = indexPlusOne(nextFirst);
         int currentLast = indexMinusOne(nextLast);
-        if ( currentFirst < currentLast) {
-//            System.arraycopy(items, currentFirst, copyItems, 0,Math.min(items.length,currentLast+1)-currentFirst);
+        if ( currentFirst < currentLast){
             System.arraycopy(items, currentFirst, copyItems, 0, size);
         } else {
             int tailSize = items.length - currentFirst;
@@ -112,10 +111,10 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     @Override
     /** Prints the items in the deque from first to last, separated by a space. */
     public void printDeque() {
-     for (T item : this) {
-         System.out.print(item + " ");
-     }
-     System.out.println();
+        for (T item : this) {
+            System.out.print(item + " ");
+        }
+        System.out.println();
     }
     @Override
     /**Removes and returns the item at the front of the deque. */
@@ -131,12 +130,12 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
             nextFirst = 0;
             nextLast = 0;
         }
-        if (items.length == 8) {
+        if (items.length == 8){
             return item;
         }
         if (size < (items.length / 4)) {
             resize(Math.max(8, items.length / 4));
-            nextFirst = items.length -1;
+            nextFirst = items.length - 1;
             nextLast = size;
         }
         return item;
@@ -154,14 +153,14 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         size -= 1;
         if (size == 0) {
             nextFirst = 0;
-            nextLast =0;
+            nextLast = 0;
         }
-        if (items.length == 8) {
+        if (items.length == 8){
             return item;
         }
         if (size < (items.length / 4)) {
             resize(Math.max(8, items.length / 4));
-            nextFirst = items.length -1;
+            nextFirst = items.length - 1;
             nextLast = size;
         }
         return item;
